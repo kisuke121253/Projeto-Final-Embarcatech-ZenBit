@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Questionário</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            text-align: center;
+        }
+
+        p {
+            font-size: 1.1em;
+            color: #555;
+            margin-bottom: 1rem;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 0.5rem;
+            font-size: 1em;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 1.5rem;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #3498db;
+            color: #fff;
+            padding: 0.75rem 1.5rem;
+            font-size: 1em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        #response {
+            margin-top: 1.5rem;
+            font-size: 1em;
+            color: #27ae60;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Questionário</h1>
+        <form id="questionnaire">
+            <p>1. De 0 a 10, quanto seus pensamentos estão controlando sua vida?</p>
+            <input type="number" name="q1" min="0" max="10" required>
+
+            <p>2. De 0 a 10, quanto seus pensamentos atrapalham suas atividades diárias?</p>
+            <input type="number" name="q2" min="0" max="10" required>
+
+            <p>3. De 0 a 10, quanto tempo do seu dia é consumido por preocupações?</p>
+            <input type="number" name="q3" min="0" max="10" required>
+
+            <p>4. De 0 a 10, o quanto você sente que está no controle dos seus pensamentos?</p>
+            <input type="number" name="q4" min="0" max="10" required>
+
+            <p>5. De 0 a 10, o quanto suas preocupações impedem você de aproveitar momentos de lazer?</p>
+            <input type="number" name="q5" min="0" max="10" required>
+
+            <p>6. De 0 a 10, o quanto você sente que sua mente está constantemente ocupada com pensamentos repetitivos?
+            </p>
+            <input type="number" name="q6" min="0" max="10" required>
+
+            <p>7. De 0 a 10, o quanto seus pensamentos afetam sua concentração no trabalho ou estudo?</p>
+            <input type="number" name="q7" min="0" max="10" required>
+
+            <p>8. De 0 a 10, o quanto seus pensamentos dificultam sua capacidade de tomar decisões?</p>
+            <input type="number" name="q8" min="0" max="10" required>
+
+            <p>9. De 0 a 10, o quanto você sente que seus pensamentos afetam seu bem-estar emocional?</p>
+            <input type="number" name="q9" min="0" max="10" required>
+
+            <p>10. De 0 a 10, o quanto você gostaria de ter mais controle sobre seus pensamentos?</p>
+            <input type="number" name="q10" min="0" max="10" required>
+
+            <button type="submit">Enviar</button>
+        </form>
+
+        <p id="response"></p>
+    </div>
+
+    <script>
+        document.getElementById('questionnaire').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const formData = new FormData(this);
+            const params = new URLSearchParams(formData).toString();
+
+            fetch('http://192.168.1.31/submit?' + params)
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('response').innerText = 'Resposta do servidor: ' + data;
+                })
+                .catch(error => console.error('Erro:', error));
+        });
+    </script>
+</body>
+
+</html>
